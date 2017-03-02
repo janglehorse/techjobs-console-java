@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -78,6 +79,31 @@ public class JobData {
 
             if (aValue.contains(value)) {
                 jobs.add(row);
+            }
+        }
+
+        return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value){
+
+        // load data, if not already loaded
+        String value_lc = value.toLowerCase();
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        //iterate through allJobs and check its keys and values for the search term
+        for (HashMap<String, String> row : allJobs) {
+
+            for (Map.Entry<String, String> entry : row.entrySet()) {
+
+                String v = entry.getValue().toLowerCase();
+
+        //if there is a match, make sure no duplicates are shown
+                if (v.contains(value_lc) && !jobs.contains(row)) {
+                        jobs.add(row);
+                }
             }
         }
 
